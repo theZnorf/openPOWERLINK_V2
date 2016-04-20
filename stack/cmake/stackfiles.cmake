@@ -628,6 +628,11 @@ SET(TARGET_ALTERA_ARM_SOURCES
 SET(TARGET_ALTERA_ARM_DUAL_SOURCES
     ${ARCH_SOURCE_DIR}/altera-c5socarm/lock-dualprocnoos.c
     )
+
+SET(TARGET_SIM_SOURCES
+        ${ARCH_SOURCE_DIR}/sim/target-sim.c
+        ${ARCH_SOURCE_DIR}/sim/target-mutex.c
+    )
 ################################################################################
 # Architecture specific sources
 ################################################################################
