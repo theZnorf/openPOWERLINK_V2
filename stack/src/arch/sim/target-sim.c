@@ -21,8 +21,9 @@ Copyright (c) 2016, Franz Profelt (franz.profelt@gmail.com)
 #include <common/target.h>
 #include <common/ftracedebug.h>
 
-#include "../../../../sim/sim-time.h"
-#include "../../../../sim/sim-network.h"
+#include "../../../../sim/simtime.h"
+#include "../../../../sim/simnetwork.h"
+#include "../../../../sim/simoutput.h"
 
 //============================================================================//
 //            P U B L I C   F U N C T I O N S                                 //
@@ -93,11 +94,7 @@ interface.
 //------------------------------------------------------------------------------
 tOplkError target_setIpAdrs(char* ifName_p, UINT32 ipAddress_p, UINT32 subnetMask_p, UINT16 mtu_p)
 {
-    tOplkError  ret = kErrorOk;
-
-    sim_setIpAdrs(ifName_p, ipAddress_p, subnetMask_p, mtu_p);
-
-    return ret;
+    return sim_setIpAdrs(ifName_p, ipAddress_p, subnetMask_p, mtu_p);
 }
 
 //------------------------------------------------------------------------------
@@ -115,11 +112,7 @@ The function sets the default gateway of an Ethernet interface.
 //------------------------------------------------------------------------------
 tOplkError target_setDefaultGateway(UINT32 defaultGateway_p)
 {
-    tOplkError  ret = kErrorOk;
-
-    sim_setDefaultGateway(defaultGateway_p);
-
-    return ret;
+    return sim_setDefaultGateway(defaultGateway_p);;
 }
 
 //------------------------------------------------------------------------------
@@ -158,7 +151,5 @@ The function sets the POWERLINK status/error LED.
 //------------------------------------------------------------------------------
 tOplkError target_setLed(tLedType ledType_p, BOOL fLedOn_p)
 {
-    sim_setLed(ledType_p, fLedOn_p);
-
-    return kErrorOk;
+    return sim_setLed(ledType_p, fLedOn_p);
 }

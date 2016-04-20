@@ -58,6 +58,10 @@ SET(COMMON_CAL_DIRECT_SOURCES
     ${COMMON_SOURCE_DIR}/dll/dllcal-direct.c
     )
 
+SET(COMMON_SIM_SOURCES
+    ${CONTRIB_SOURCE_DIR}/trace/trace-sim.c
+    )
+
 ################################################################################
 # Application library (User) sources
 ################################################################################
@@ -257,6 +261,11 @@ SET(EVENT_UCAL_WINDOWSIOCTL_SOURCES
     ${USER_SOURCE_DIR}/event/eventucal-winioctl.c
     )
 
+SET(EVENT_UCAL_SIM_SOURCES
+    ${USER_SOURCE_DIR}/event/eventucal-nooscircbuf.c
+    ${USER_SOURCE_DIR}/event/eventucalintf-circbuf.c
+    )
+
 ################################################################################
 # User PDO CAL sources
 SET(PDO_UCAL_LOCAL_SOURCES
@@ -414,6 +423,11 @@ SET(EVENT_KCAL_DUALPROCSHM_SOURCES
     ${KERNEL_SOURCE_DIR}/event/eventkcal-noosdual.c
     )
 
+SET(EVENT_KCAL_SIM_SOURCES
+    ${KERNEL_SOURCE_DIR}/event/eventkcalintf-circbuf.c
+    ${KERNEL_SOURCE_DIR}/event/eventkcal-nooscircbuf.c
+    )
+
 ################################################################################
 # Kernel PDO CAL sources
 
@@ -510,6 +524,10 @@ SET(USER_TIMER_GENERIC_SOURCES
     ${USER_SOURCE_DIR}/timer/timer-generic.c
     )
 
+SET(USER_TIMER_SIM_SOURCES
+    ${USER_SOURCE_DIR}/timer/timer-sim.c
+    )
+
 ################################################################################
 # Circular buffer sources
 ################################################################################
@@ -547,6 +565,11 @@ SET(CIRCBUF_NOOSHOSTIF_SOURCES
 SET(CIRCBUF_DUALPROCSHM_SOURCES
     ${COMMON_SOURCE_DIR}/circbuf/circbuffer.c
     ${COMMON_SOURCE_DIR}/circbuf/circbuf-noosdual.c
+    )
+
+SET(CIRCBUF_SIM_SOURCES
+    ${COMMON_SOURCE_DIR}/circbuf/circbuffer.c
+    ${COMMON_SOURCE_DIR}/circbuf/circbuf-noos.c
     )
 
 ################################################################################

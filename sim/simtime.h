@@ -1,8 +1,8 @@
 /**
 ********************************************************************************
-\file   sim-output.h
+\file   simtime.h
 
-\brief  Include file for simulation interface providing output functions
+\brief  Include file for simulation interface providing time related functions
 
 *******************************************************************************/
 
@@ -10,22 +10,19 @@
 Copyright (c) 2016, Franz Profelt (franz.profelt@gmail.com)
 ------------------------------------------------------------------------------*/
 
-#ifndef _INC_sim_output_H_
-#define _INC_sim_output_H_
+#ifndef _INC_simtime_H_
+#define _INC_simtime_H_
 
 //------------------------------------------------------------------------------
 // includes
 //------------------------------------------------------------------------------
 
-#include <oplk/basictypes.h>
+#include <common/oplkinc.h>
+#include <user/timeru.h>
 
 //------------------------------------------------------------------------------
 // const defines
 //------------------------------------------------------------------------------
-
-#ifndef tLedType
-#define tLedType UINT32
-#endif
 
 //------------------------------------------------------------------------------
 // typedef
@@ -40,10 +37,15 @@ extern "C"
 {
 #endif
 
-OPLKDLLEXPORT void sim_setLed(tLedType ledType_p, BOOL fLedOn_p);
+OPLKDLLEXPORT void sim_sleep(UINT32 milliseconds_p);
+OPLKDLLEXPORT UINT32 sim_getTickCount();
+OPLKDLLEXPORT tOplkError sim_setTimer(tTimerHdl* pTimerHdl_p, ULONG timeInMs_p, tTimerArg argument_p);
+OPLKDLLEXPORT tOplkError sim_modifyTimer(tTimerHdl* pTimerHdl_p, ULONG timeInMs_p, tTimerArg argument_p);
+OPLKDLLEXPORT tOplkError sim_deleteTimer(tTimerHdl* pTimerHdl_p);
+OPLKDLLEXPORT BOOL sim_isActive(tTimerHdl timerHdl_p);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* _INC_sim_output_H_ */
+#endif /* _INC_simtime_H_ */

@@ -131,4 +131,12 @@ Copyright (c) 2016, Franz Profelt (franz.profelt@gmail.com)
 #define CONFIG_SDO_MAX_CONNECTION_COM               100
 #define CONFIG_SDO_MAX_CONNECTION_UDP               50
 
+
+//==============================================================================
+// Trace defines
+//==============================================================================
+
+// size of character buffer holding trace messages
+#define TRACE_SIM_BUFFER_SIZE                       256
+
 #endif // _INC_oplkcfg_H_

@@ -107,6 +107,7 @@ The function creates a socket for the SDO over UDP connection.
 //------------------------------------------------------------------------------
 tOplkError sdoudp_createSocket(tSdoUdpCon* pSdoUdpCon_p)
 {
+    UNUSED_PARAMETER(pSdoUdpCon_p);
     return kErrorSdoUdpNoSocket;
 }
 
@@ -143,6 +144,9 @@ The function sends an SDO frame to the given UDP connection.
 //------------------------------------------------------------------------------
 tOplkError sdoudp_sendToSocket(tSdoUdpCon* pSdoUdpCon_p, tPlkFrame* pSrcData_p, UINT32 dataSize_p)
 {
+    UNUSED_PARAMETER(pSdoUdpCon_p);
+    UNUSED_PARAMETER(pSrcData_p);
+    UNUSED_PARAMETER(dataSize_p);
     return kErrorSdoUdpNoSocket;
 }
 

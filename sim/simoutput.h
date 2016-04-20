@@ -1,8 +1,8 @@
 /**
 ********************************************************************************
-\file   sim-time.h
+\file   simoutput.h
 
-\brief  Include file for simulation interface providing time related functions
+\brief  Include file for simulation interface providing output functions
 
 *******************************************************************************/
 
@@ -10,14 +10,14 @@
 Copyright (c) 2016, Franz Profelt (franz.profelt@gmail.com)
 ------------------------------------------------------------------------------*/
 
-#ifndef _INC_sim_time_H_
-#define _INC_sim_time_H_
+#ifndef _INC_simoutput_H_
+#define _INC_simoutput_H_
 
 //------------------------------------------------------------------------------
 // includes
 //------------------------------------------------------------------------------
 
-#include <oplk/basictypes.h>
+#include <common/oplkinc.h>
 
 //------------------------------------------------------------------------------
 // const defines
@@ -36,11 +36,11 @@ extern "C"
 {
 #endif
 
-OPLKDLLEXPORT void sim_sleep(UINT32 milliseconds_p);
-OPLKDLLEXPORT UINT32 sim_getTickCount();
+OPLKDLLEXPORT tOplkError sim_setLed(tLedType ledType_p, BOOL fLedOn_p);
+OPLKDLLEXPORT void sim_trace(const char* pMsg_p);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* _INC_sim_time_H_ */
+#endif /* _INC_simoutput_H_ */

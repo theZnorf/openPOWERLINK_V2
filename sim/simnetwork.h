@@ -1,6 +1,6 @@
 /**
 ********************************************************************************
-\file   sim-network.h
+\file   simnetwork.h
 
 \brief  Include file for simulation interface providing network functions
 
@@ -10,14 +10,14 @@
 Copyright (c) 2016, Franz Profelt (franz.profelt@gmail.com)
 ------------------------------------------------------------------------------*/
 
-#ifndef _INC_sim_network_H_
-#define _INC_sim_network_H_
+#ifndef _INC_simnetwork_H_
+#define _INC_simnetwork_H_
 
 //------------------------------------------------------------------------------
 // includes
 //------------------------------------------------------------------------------
 
-#include <oplk/basictypes.h>
+#include <common/oplkinc.h>
 
 //------------------------------------------------------------------------------
 // const defines
@@ -36,11 +36,11 @@ extern "C"
 {
 #endif
 
-OPLKDLLEXPORT void sim_setIpAdrs(char* ifName_p, UINT32 ipAddress_p, UINT32 subnetMask_p, UINT16 mtu_p);
-OPLKDLLEXPORT void sim_setDefaultGateway(UINT32 defaultGateway_p);
+OPLKDLLEXPORT tOplkError sim_setIpAdrs(char* ifName_p, UINT32 ipAddress_p, UINT32 subnetMask_p, UINT16 mtu_p);
+OPLKDLLEXPORT tOplkError sim_setDefaultGateway(UINT32 defaultGateway_p);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* _INC_sim_network_H_ */
+#endif /* _INC_simnetwork_H_ */
