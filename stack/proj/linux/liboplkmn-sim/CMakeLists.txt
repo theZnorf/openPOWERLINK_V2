@@ -1,6 +1,6 @@
 ################################################################################
 #
-# CMake file for openPOWERLINK MN library within OMNeT++ running on Linux
+# CMake file for openPOWERLINK MN library on Linux with simulation interface
 #
 # Copyright (c) 2016, Franz Profelt (franz.profelt@gmail.com)
 #
@@ -58,7 +58,7 @@ IF(CFG_INCLUDE_MN_REDUNDANCY)
     ADD_DEFINITIONS(-DCONFIG_INCLUDE_NMT_RMN)
 ENDIF()
 ADD_DEFINITIONS(-DCONFIG_MN -D_GNU_SOURCE -D_POSIX_C_SOURCE=200112L)
-SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -pedantic -std=c99 -pthread -fno-strict-aliasing")
+SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -pedantic -std=c99 -fno-strict-aliasing")
 
 # Additional include directories
 INCLUDE_DIRECTORIES(

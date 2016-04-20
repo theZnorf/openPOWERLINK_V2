@@ -5,7 +5,7 @@
 \brief  Configuration options for openPOWERLINK MN library
 
 This file contains the configuration options for the openPOWERLINK MN libary
-within OMNeT++ running on Linux.
+on Linux with simulation interface.
 
 *******************************************************************************/
 

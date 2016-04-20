@@ -5,7 +5,7 @@
 \brief  Configuration options for openPOWERLINK CN library
 
 This file contains the configuration options for the openPOWERLINK CN libary
-within OMNeT++ running on Windows.
+on Windows with simulation interface.
 
 *******************************************************************************/
 

@@ -1,6 +1,6 @@
 ################################################################################
 #
-# CMake file for openPOWERLINK CN library within OMNeT++ running on Windows
+# CMake file for openPOWERLINK CN library on Windows with simulation interface
 #
 # Copyright (c) 2016, Franz Profelt (franz.profelt@gmail.com)
 #
