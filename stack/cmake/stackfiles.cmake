@@ -133,6 +133,10 @@ SET(SDO_SOCKETWRAPPER_SOURCES
     ${USER_SOURCE_DIR}/sdo/sdoudp-socketwrapper.c
     )
 
+SET(SDO_SIM_SOURCES
+    ${USER_SOURCE_DIR}/sdo/sdoudp-sim.c
+    )
+
 ################################################################################
 # User control CAL sources
 
