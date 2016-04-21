@@ -19,6 +19,7 @@ Copyright (c) 2016, Franz Profelt (franz.profelt@gmail.com)
 
 #include <common/oplkinc.h>
 #include <user/timeru.h>
+#include <kernel/hrestimer.h>
 
 //------------------------------------------------------------------------------
 // const defines
@@ -43,6 +44,10 @@ OPLKDLLEXPORT tOplkError sim_setTimer(tTimerHdl* pTimerHdl_p, ULONG timeInMs_p, 
 OPLKDLLEXPORT tOplkError sim_modifyTimer(tTimerHdl* pTimerHdl_p, ULONG timeInMs_p, tTimerArg argument_p);
 OPLKDLLEXPORT tOplkError sim_deleteTimer(tTimerHdl* pTimerHdl_p);
 OPLKDLLEXPORT BOOL sim_isActive(tTimerHdl timerHdl_p);
+OPLKDLLEXPORT tOplkError sim_modifyHresTimer(tTimerHdl* pTimerHdl_p, ULONGLONG time_p,
+                                 tTimerkCallback pfnCallback_p, ULONG argument_p,
+                                 BOOL fContinue_p);
+OPLKDLLEXPORT tOplkError sim_deleteHresTimer(tTimerHdl* pTimerHdl_p);
 
 #ifdef __cplusplus
 }

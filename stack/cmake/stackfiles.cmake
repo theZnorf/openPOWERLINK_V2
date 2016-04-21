@@ -508,6 +508,14 @@ SET(HARDWARE_DRIVER_OPENMAC_MN_SOURCES
     ${KERNEL_SOURCE_DIR}/timer/hrestimer-openmac.c
     ${KERNEL_SOURCE_DIR}/edrv/edrvcyclic-openmac.c
     )
+
+SET(HARDWARE_DRIVER_SIM_SOURCES
+    ${KERNEL_SOURCE_DIR}/veth/veth-generic.c
+    ${KERNEL_SOURCE_DIR}/timer/hrestimer-sim.c
+    ${EDRV_SOURCE_DIR}/edrvcyclic.c
+    ${EDRV_SOURCE_DIR}/edrv-sim.c
+    )
+
 ################################################################################
 # User timer sources
 
