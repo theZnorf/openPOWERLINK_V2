@@ -1,8 +1,9 @@
 /**
 ********************************************************************************
-\file   simtimer.h
+\file   sim-timer.h
 
-\brief  Include file for simulation interface providing time related functions
+\brief  Include file for simulation interface providing user timer related
+ functions
 
 *******************************************************************************/
 
@@ -10,8 +11,8 @@
 Copyright (c) 2016, Franz Profelt (franz.profelt@gmail.com)
 ------------------------------------------------------------------------------*/
 
-#ifndef _INC_simtimer_H_
-#define _INC_simtimer_H_
+#ifndef _INC_sim_timer_H_
+#define _INC_sim_timer_H_
 
 //------------------------------------------------------------------------------
 // includes
@@ -19,7 +20,6 @@ Copyright (c) 2016, Franz Profelt (franz.profelt@gmail.com)
 
 #include <common/oplkinc.h>
 #include <user/timeru.h>
-#include <kernel/hrestimer.h>
 
 //------------------------------------------------------------------------------
 // const defines
@@ -38,19 +38,14 @@ extern "C"
 {
 #endif
 
-OPLKDLLEXPORT void sim_sleep(UINT32 milliseconds_p);
-OPLKDLLEXPORT UINT32 sim_getTickCount();
-OPLKDLLEXPORT tOplkError sim_setTimer(tTimerHdl* pTimerHdl_p, ULONG timeInMs_p, tTimerArg argument_p);
-OPLKDLLEXPORT tOplkError sim_modifyTimer(tTimerHdl* pTimerHdl_p, ULONG timeInMs_p, tTimerArg argument_p);
-OPLKDLLEXPORT tOplkError sim_deleteTimer(tTimerHdl* pTimerHdl_p);
-OPLKDLLEXPORT BOOL sim_isActive(tTimerHdl timerHdl_p);
-OPLKDLLEXPORT tOplkError sim_modifyHresTimer(tTimerHdl* pTimerHdl_p, ULONGLONG time_p,
-                                 tTimerkCallback pfnCallback_p, ULONG argument_p,
-                                 BOOL fContinue_p);
-OPLKDLLEXPORT tOplkError sim_deleteHresTimer(tTimerHdl* pTimerHdl_p);
+UINT32 sim_getTickCount();
+tOplkError sim_setTimer(tTimerHdl* pTimerHdl_p, ULONG timeInMs_p, tTimerArg argument_p);
+tOplkError sim_modifyTimer(tTimerHdl* pTimerHdl_p, ULONG timeInMs_p, tTimerArg argument_p);
+tOplkError sim_deleteTimer(tTimerHdl* pTimerHdl_p);
+BOOL sim_isActive(tTimerHdl timerHdl_p);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* _INC_simtimer_H_ */
+#endif /* _INC_sim_timer_H_ */

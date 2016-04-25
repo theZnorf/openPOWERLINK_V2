@@ -1,8 +1,8 @@
 /**
 ********************************************************************************
-\file   simtimer.h
+\file   sim-hrestimer.h
 
-\brief  Include file for simulation interface providing time related functions
+\brief  Include file for simulation interface providing hrestimer functions
 
 *******************************************************************************/
 
@@ -10,15 +10,14 @@
 Copyright (c) 2016, Franz Profelt (franz.profelt@gmail.com)
 ------------------------------------------------------------------------------*/
 
-#ifndef _INC_simtimer_H_
-#define _INC_simtimer_H_
+#ifndef _INC_sim_hrestimer_H_
+#define _INC_sim_hrestimer_H_
 
 //------------------------------------------------------------------------------
 // includes
 //------------------------------------------------------------------------------
 
 #include <common/oplkinc.h>
-#include <user/timeru.h>
 #include <kernel/hrestimer.h>
 
 //------------------------------------------------------------------------------
@@ -29,6 +28,17 @@ Copyright (c) 2016, Franz Profelt (franz.profelt@gmail.com)
 // typedef
 //------------------------------------------------------------------------------
 
+typedef tOplkError(*tModifyHresTimerFunction)(tTimerHdl *, ULONGLONG,
+                                              tTimerkCallback, ULONG, BOOL);
+typedef tOplkError(*tDeleteHresTimerFunction)(tTimerHdl *);
+
+
+typedef struct
+{
+    tModifyHresTimerFunction pfnModifyHresTimer;
+    tDeleteHresTimerFunction pfnDeleteHresTimer;
+} tHresTimerFunctions;
+
 //------------------------------------------------------------------------------
 // function prototypes
 //------------------------------------------------------------------------------
@@ -38,19 +48,17 @@ extern "C"
 {
 #endif
 
-OPLKDLLEXPORT void sim_sleep(UINT32 milliseconds_p);
-OPLKDLLEXPORT UINT32 sim_getTickCount();
-OPLKDLLEXPORT tOplkError sim_setTimer(tTimerHdl* pTimerHdl_p, ULONG timeInMs_p, tTimerArg argument_p);
-OPLKDLLEXPORT tOplkError sim_modifyTimer(tTimerHdl* pTimerHdl_p, ULONG timeInMs_p, tTimerArg argument_p);
-OPLKDLLEXPORT tOplkError sim_deleteTimer(tTimerHdl* pTimerHdl_p);
-OPLKDLLEXPORT BOOL sim_isActive(tTimerHdl timerHdl_p);
-OPLKDLLEXPORT tOplkError sim_modifyHresTimer(tTimerHdl* pTimerHdl_p, ULONGLONG time_p,
-                                 tTimerkCallback pfnCallback_p, ULONG argument_p,
-                                 BOOL fContinue_p);
-OPLKDLLEXPORT tOplkError sim_deleteHresTimer(tTimerHdl* pTimerHdl_p);
+OPLKDLLEXPORT BOOL sim_setHresTimerFunctions(tHresTimerFunctions hresTimerFunctions_p);
+OPLKDLLEXPORT void sim_unsetHresTimerFunctions();
+
+tOplkError sim_modifyHresTimer(tTimerHdl *pTimerHdl_p, ULONGLONG time_p,
+                               tTimerkCallback pfnCallback_p, ULONG argument_p,
+                               BOOL fContinue_p);
+
+tOplkError sim_deleteHresTimer(tTimerHdl *pTimerHdl_p);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* _INC_simtimer_H_ */
+#endif /* _INC_sim_hrestimer_H_ */

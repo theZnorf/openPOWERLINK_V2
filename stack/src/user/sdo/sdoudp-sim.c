@@ -19,6 +19,7 @@ Copyright (c) 2016, Franz Profelt (franz.profelt@gmail.com)
 //------------------------------------------------------------------------------
 #include <common/oplkinc.h>
 #include <user/sdoudp.h>
+#include <sim-sdoudp.h>
 
 
 #if defined(CONFIG_INCLUDE_SDO_UDP)
@@ -76,7 +77,7 @@ The function initializes the SDO over UDP socket module.
 //------------------------------------------------------------------------------
 tOplkError sdoudp_initSocket(void)
 {
-    return kErrorSdoUdpNoSocket;
+    return kErrorOk;
 }
 
 //------------------------------------------------------------------------------
@@ -107,8 +108,7 @@ The function creates a socket for the SDO over UDP connection.
 //------------------------------------------------------------------------------
 tOplkError sdoudp_createSocket(tSdoUdpCon* pSdoUdpCon_p)
 {
-    UNUSED_PARAMETER(pSdoUdpCon_p);
-    return kErrorSdoUdpNoSocket;
+    return sim_createSdoUdpSocket(pSdoUdpCon_p);
 }
 
 //------------------------------------------------------------------------------
@@ -124,7 +124,7 @@ The function closes the created socket for the SDO over UDP connection.
 //------------------------------------------------------------------------------
 tOplkError sdoudp_closeSocket(void)
 {
-    return kErrorSdoUdpNoSocket;
+    return sim_closeSdoUdpSocket();
 }
 
 //------------------------------------------------------------------------------
@@ -144,10 +144,7 @@ The function sends an SDO frame to the given UDP connection.
 //------------------------------------------------------------------------------
 tOplkError sdoudp_sendToSocket(tSdoUdpCon* pSdoUdpCon_p, tPlkFrame* pSrcData_p, UINT32 dataSize_p)
 {
-    UNUSED_PARAMETER(pSdoUdpCon_p);
-    UNUSED_PARAMETER(pSrcData_p);
-    UNUSED_PARAMETER(dataSize_p);
-    return kErrorSdoUdpNoSocket;
+    return sim_sendToSdoUdpSocket(pSdoUdpCon_p, pSrcData_p, dataSize_p);
 }
 
 //------------------------------------------------------------------------------
@@ -169,7 +166,7 @@ the SDO UDP module.
 //------------------------------------------------------------------------------
 void sdoudp_criticalSection(BOOL fEnable_p)
 {
-    UNUSED_PARAMETER(fEnable_p);
+    sim_criticalSectionSdoUdp(fEnable_p);
 }
 
 //============================================================================//

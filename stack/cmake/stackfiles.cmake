@@ -687,6 +687,8 @@ SET(SIM_STUB_SOURCES
     ${SIM_SOURCE_DIR}/sim-target.c
     ${SIM_SOURCE_DIR}/sim-trace.c
     ${SIM_SOURCE_DIR}/sim-edrv.c
+    ${SIM_SOURCE_DIR}/sim-hrestimer.c
+    ${SIM_SOURCE_DIR}/sim-sdoudp.c
     )
 
 ################################################################################

@@ -17,7 +17,7 @@ Copyright (c) 2016, Franz Profelt (franz.profelt@gmail.com)
 #include <common/oplkinc.h>
 #include <kernel/hrestimer.h>
 
-#include "../../../../sim/include/sim-timer.h"
+#include <sim-hrestimer.h>
 
 //============================================================================//
 //            G L O B A L   D E F I N I T I O N S                             //
