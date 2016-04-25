@@ -44,7 +44,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <user/timeru.h>
 #include <user/eventu.h>
 
-#include "../../../../sim/simtime.h"
+#include "../../../../sim/include/sim-timer.h"
 
 //============================================================================//
 //            G L O B A L   D E F I N I T I O N S                             //

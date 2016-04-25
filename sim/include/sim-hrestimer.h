@@ -1,8 +1,8 @@
 /**
 ********************************************************************************
-\file   simethernet.h
+\file   simtimer.h
 
-\brief  Include file for simulation interface providing ethernet functions
+\brief  Include file for simulation interface providing time related functions
 
 *******************************************************************************/
 
@@ -10,14 +10,16 @@
 Copyright (c) 2016, Franz Profelt (franz.profelt@gmail.com)
 ------------------------------------------------------------------------------*/
 
-#ifndef _INC_ethernet_H_
-#define _INC_ethernet_H_
+#ifndef _INC_simtimer_H_
+#define _INC_simtimer_H_
 
 //------------------------------------------------------------------------------
 // includes
 //------------------------------------------------------------------------------
 
 #include <common/oplkinc.h>
+#include <user/timeru.h>
+#include <kernel/hrestimer.h>
 
 //------------------------------------------------------------------------------
 // const defines
@@ -36,20 +38,19 @@ extern "C"
 {
 #endif
 
-OPLKDLLEXPORT tOplkError sim_initEthernet(tEdrvInitParam* pEdrvInitParam_p);
-OPLKDLLEXPORT tOplkError sim_exitEthernet();
-OPLKDLLEXPORT UINT8* sim_getMacAddr();
-OPLKDLLEXPORT tOplkError sim_sendTxBuffer(tEdrvTxBuffer* pBuffer_p);
-OPLKDLLEXPORT tOplkError sim_allocTxBuffer(tEdrvTxBuffer* pBuffer_p);
-OPLKDLLEXPORT tOplkError sim_freeTxBuffer(tEdrvTxBuffer* pBuffer_p);
-OPLKDLLEXPORT tOplkError sim_changeRxFilter(tEdrvFilter* pFilter_p, UINT count_p,
-                                             UINT entryChanged_p, UINT changeFlags_p);
-OPLKDLLEXPORT tOplkError sim_clearRxMulticastMacAddr(UINT8* pMacAddr_p);
-OPLKDLLEXPORT tOplkError sim_setRxMulticastMacAddr(UINT8* pMacAddr_p);
-
+OPLKDLLEXPORT void sim_sleep(UINT32 milliseconds_p);
+OPLKDLLEXPORT UINT32 sim_getTickCount();
+OPLKDLLEXPORT tOplkError sim_setTimer(tTimerHdl* pTimerHdl_p, ULONG timeInMs_p, tTimerArg argument_p);
+OPLKDLLEXPORT tOplkError sim_modifyTimer(tTimerHdl* pTimerHdl_p, ULONG timeInMs_p, tTimerArg argument_p);
+OPLKDLLEXPORT tOplkError sim_deleteTimer(tTimerHdl* pTimerHdl_p);
+OPLKDLLEXPORT BOOL sim_isActive(tTimerHdl timerHdl_p);
+OPLKDLLEXPORT tOplkError sim_modifyHresTimer(tTimerHdl* pTimerHdl_p, ULONGLONG time_p,
+                                 tTimerkCallback pfnCallback_p, ULONG argument_p,
+                                 BOOL fContinue_p);
+OPLKDLLEXPORT tOplkError sim_deleteHresTimer(tTimerHdl* pTimerHdl_p);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* _INC_ethernet_H_ */
+#endif /* _INC_simtimer_H_ */

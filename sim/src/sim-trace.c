@@ -1,9 +1,10 @@
 /**
 ********************************************************************************
-\file   trace-sim.c
+\file   sim-trace.c
 
-\brief  Trace function using simulation interface
+\brief  Implementation of stub for trace functions using simulation interface
 
+\ingroup module_sim
 *******************************************************************************/
 
 /*------------------------------------------------------------------------------
@@ -13,9 +14,6 @@ Copyright (c) 2016, Franz Profelt (franz.profelt@gmail.com)
 //------------------------------------------------------------------------------
 // includes
 //------------------------------------------------------------------------------
-
-#include <common/oplkinc.h>
-#include <stdarg.h>
 #include <sim-trace.h>
 
 //============================================================================//
@@ -46,21 +44,17 @@ Copyright (c) 2016, Franz Profelt (franz.profelt@gmail.com)
 // local types
 //------------------------------------------------------------------------------
 
-/**
-\brief Trace instance
-
- Instance structure containing the static char buffer
- */
 typedef struct
 {
-    char buffer[TRACE_SIM_BUFFER_SIZE]; ///< Buffer for trace messages
-} tTraceInstance;
+    tTraceFunctions traceFunctions;
+    BOOL fInitialized;
+} tSimTraceInstance;
 
 //------------------------------------------------------------------------------
 // local vars
 //------------------------------------------------------------------------------
 
-static tTraceInstance traceInstance_l;
+static tSimTraceInstance instance_l = { { NULL }, FALSE};
 
 //------------------------------------------------------------------------------
 // local function prototypes
@@ -70,26 +64,40 @@ static tTraceInstance traceInstance_l;
 //            P U B L I C   F U N C T I O N S                                 //
 //============================================================================//
 
-//------------------------------------------------------------------------------
-/**
-\brief  Print debug trace message
-
-The function prints a debug trace message using the simulation inteface
-
-\param  fmt         Format string
-\param  ...         Arguments to print
-*/
-//------------------------------------------------------------------------------
-void trace(const char* fmt, ...)
+BOOL sim_setTraceFunctions(tTraceFunctions traceFunctions_p)
 {
-    // clear buffer
-    OPLK_MEMSET(traceInstance_l.buffer, 0, TRACE_SIM_BUFFER_SIZE);
+    if (instance_l.fInitialized != TRUE)
+    {
+        // check function pointer
+        if (traceFunctions_p.pfnTrace == NULL)
+            return FALSE;
 
-    va_list argptr;
+        instance_l.traceFunctions = traceFunctions_p;
+        instance_l.fInitialized = TRUE;
+    }
 
-    va_start(argptr, fmt);
-    sprintf(traceInstance_l.buffer, fmt, argptr);
-    va_end(argptr);
-
-    sim_trace(traceInstance_l.buffer);
+    return FALSE;
 }
+
+void sim_unsetTraceFunctions()
+{
+    instance_l.fInitialized = FALSE;
+}
+
+void sim_trace(char const *pmsg_p)
+{
+    // check if module was initialized
+    if (instance_l.fInitialized == TRUE)
+    {
+        // call function
+        instance_l.traceFunctions.pfnTrace(pmsg_p);
+    }
+}
+
+//============================================================================//
+//            P R I V A T E   F U N C T I O N S                               //
+//============================================================================//
+/// \name Private Functions
+/// \{
+
+/// \}

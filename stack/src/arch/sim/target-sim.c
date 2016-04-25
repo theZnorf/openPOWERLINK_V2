@@ -20,10 +20,7 @@ Copyright (c) 2016, Franz Profelt (franz.profelt@gmail.com)
 #include <common/oplkinc.h>
 #include <common/target.h>
 #include <common/ftracedebug.h>
-
-#include "../../../../sim/simtime.h"
-#include "../../../../sim/simnetwork.h"
-#include "../../../../sim/simoutput.h"
+#include <sim-target.h>
 
 //============================================================================//
 //            P U B L I C   F U N C T I O N S                                 //
@@ -72,7 +69,7 @@ milliseconds has elapsed.
 //------------------------------------------------------------------------------
 void target_msleep(UINT32 milliSeconds_p)
 {
-    sim_sleep(milliSeconds_p);
+    sim_msleep(milliSeconds_p);
 }
 
 //------------------------------------------------------------------------------

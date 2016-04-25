@@ -19,8 +19,7 @@ Copyright (c) 2016, Franz Profelt (franz.profelt@gmail.com)
 //------------------------------------------------------------------------------
 #include <common/oplkinc.h>
 #include <kernel/edrv.h>
-
-#include "../../../../sim/simethernet.h"
+#include <sim-edrv.h>
 
 //============================================================================//
 //            G L O B A L   D E F I N I T I O N S                             //
@@ -77,7 +76,7 @@ This function initializes the Ethernet driver.
 //------------------------------------------------------------------------------
 tOplkError edrv_init(tEdrvInitParam* pEdrvInitParam_p)
 {
-    return sim_initEthernet(pEdrvInitParam_p);
+    return sim_initEdrv(pEdrvInitParam_p);
 }
 
 //------------------------------------------------------------------------------
@@ -93,7 +92,7 @@ This function shuts down the Ethernet driver.
 //------------------------------------------------------------------------------
 tOplkError edrv_exit(void)
 {
-    return sim_exitEthernet();
+    return sim_exitEdrv();
 }
 
 //------------------------------------------------------------------------------
