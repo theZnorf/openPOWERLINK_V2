@@ -47,6 +47,7 @@ Copyright (c) 2016, Franz Profelt (franz.profelt@gmail.com)
 typedef struct
 {
     tHresTimerFunctions hresTimerFunctions;
+    tSimulationInstanceHdl simHdl;
     BOOL fInitialized;
 } tSimHresTimerInstance;
 
@@ -54,7 +55,7 @@ typedef struct
 // local vars
 //------------------------------------------------------------------------------
 
-static tSimHresTimerInstance instance_l = {{NULL}, FALSE};
+static tSimHresTimerInstance instance_l = {{NULL}, 0, FALSE};
 
 //------------------------------------------------------------------------------
 // local function prototypes
@@ -64,7 +65,8 @@ static tSimHresTimerInstance instance_l = {{NULL}, FALSE};
 //            P U B L I C   F U N C T I O N S                                 //
 //============================================================================//
 
-BOOL sim_setHresTimerFunctions(tHresTimerFunctions hresTimerFunctions_p)
+BOOL sim_setHresTimerFunctions(tSimulationInstanceHdl simHdl_p,
+                               tHresTimerFunctions hresTimerFunctions_p)
 {
     if (instance_l.fInitialized != TRUE)
     {
@@ -74,6 +76,7 @@ BOOL sim_setHresTimerFunctions(tHresTimerFunctions hresTimerFunctions_p)
             return FALSE;
 
         instance_l.hresTimerFunctions = hresTimerFunctions_p;
+        instance_l.simHdl = simHdl_p;
         instance_l.fInitialized = TRUE;
     }
 
@@ -94,7 +97,8 @@ tOplkError sim_modifyHresTimer(tTimerHdl *pTimerHdl_p, ULONGLONG time_p,
     {
         // call function
         return instance_l.hresTimerFunctions
-                         .pfnModifyHresTimer(pTimerHdl_p, time_p, pfnCallback_p,
+                         .pfnModifyHresTimer(instance_l.simHdl, pTimerHdl_p,
+                                             time_p, pfnCallback_p,
                                              argument_p, fContinue_p);
     }
 
@@ -107,7 +111,8 @@ tOplkError sim_deleteHresTimer(tTimerHdl *pTimerHdl_p)
     if (instance_l.fInitialized == TRUE)
     {
         // call function
-        return instance_l.hresTimerFunctions.pfnDeleteHresTimer(pTimerHdl_p);
+        return instance_l.hresTimerFunctions
+                         .pfnDeleteHresTimer(instance_l.simHdl, pTimerHdl_p);
     }
 
     return kErrorApiNotInitialized;

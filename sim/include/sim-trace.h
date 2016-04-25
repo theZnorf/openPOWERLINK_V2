@@ -17,6 +17,7 @@ Copyright (c) 2016, Franz Profelt (franz.profelt@gmail.com)
 // includes
 //------------------------------------------------------------------------------
 #include <common/oplkinc.h>
+#include <sim.h>
 
 //------------------------------------------------------------------------------
 // const defines
@@ -26,7 +27,7 @@ Copyright (c) 2016, Franz Profelt (franz.profelt@gmail.com)
 // typedef
 //------------------------------------------------------------------------------
 
-typedef void(*tTraceFunction)(char const *);
+typedef void(*tTraceFunction)(tSimulationInstanceHdl, char const *);
 
 typedef struct
 {
@@ -42,10 +43,12 @@ extern "C"
 {
 #endif
 
-OPLKDLLEXPORT BOOL sim_setTraceFunctions(tTraceFunctions traceFunctions_p);
+OPLKDLLEXPORT BOOL sim_setTraceFunctions(tSimulationInstanceHdl simHdl_p,
+                                         tTraceFunctions traceFunctions_p);
+
 OPLKDLLEXPORT void sim_unsetTraceFunctions();
 
-void sim_trace(char const * pmsg_p);
+void sim_trace(char const *pmsg_p);
 
 #ifdef __cplusplus
 }

@@ -19,6 +19,7 @@ Copyright (c) 2016, Franz Profelt (franz.profelt@gmail.com)
 
 #include <common/oplkinc.h>
 #include <user/sdoudp.h>
+#include <sim.h>
 
 //------------------------------------------------------------------------------
 // const defines
@@ -28,13 +29,16 @@ Copyright (c) 2016, Franz Profelt (franz.profelt@gmail.com)
 // typedef
 //------------------------------------------------------------------------------
 
-typedef tOplkError(*tCreateSdoUdpSocketFunction)(tSdoUdpCon *);
+typedef tOplkError(*tCreateSdoUdpSocketFunction)(tSimulationInstanceHdl,
+                                                 tSdoUdpCon *);
 
-typedef tOplkError(*tCloseSdoUdpSocketFunction)(void);
+typedef tOplkError(*tCloseSdoUdpSocketFunction)(tSimulationInstanceHdl);
 
-typedef tOplkError(*tSendToSdoUdpSocketFunction)(tSdoUdpCon *, tPlkFrame *,
+typedef tOplkError(*tSendToSdoUdpSocketFunction)(tSimulationInstanceHdl,
+                                                 tSdoUdpCon *, tPlkFrame *,
                                                  UINT32);
-typedef void(*tCriticalSectionSdoUdpFunction)(BOOL);
+
+typedef void(*tCriticalSectionSdoUdpFunction)(tSimulationInstanceHdl, BOOL);
 
 
 typedef struct
@@ -54,8 +58,8 @@ extern "C"
 {
 #endif
 
-OPLKDLLEXPORT BOOL sim_setSdoUdpFunctions(
-        tSdoUdpFunctions sdoUdpFunctions_p);
+OPLKDLLEXPORT BOOL sim_setSdoUdpFunctions(tSimulationInstanceHdl simHdl_p,
+                                          tSdoUdpFunctions sdoUdpFunctions_p);
 
 OPLKDLLEXPORT void sim_unsetSdoUdpFunctions();
 

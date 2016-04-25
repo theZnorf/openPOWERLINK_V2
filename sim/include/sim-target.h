@@ -19,6 +19,7 @@ Copyright (c) 2016, Franz Profelt (franz.profelt@gmail.com)
 
 #include <common/oplkinc.h>
 #include <common/led.h>
+#include <sim.h>
 
 //------------------------------------------------------------------------------
 // const defines
@@ -28,11 +29,11 @@ Copyright (c) 2016, Franz Profelt (franz.profelt@gmail.com)
 // typedef
 //------------------------------------------------------------------------------
 
-typedef void(*tMsleepFunction)(UINT32);
-typedef tOplkError(*tSetIpFunction)(char*, UINT32, UINT32, UINT16);
-typedef tOplkError(*tSetDefaultGateWayFunction)(UINT32);
-typedef UINT32(*tGetTickFunction)(void);
-typedef tOplkError(*tSetLedFunction)(tLedType, BOOL);
+typedef void(*tMsleepFunction)(tSimulationInstanceHdl, UINT32);
+typedef tOplkError(*tSetIpFunction)(tSimulationInstanceHdl, char*, UINT32, UINT32, UINT16);
+typedef tOplkError(*tSetDefaultGateWayFunction)(tSimulationInstanceHdl, UINT32);
+typedef UINT32(*tGetTickFunction)(tSimulationInstanceHdl);
+typedef tOplkError(*tSetLedFunction)(tSimulationInstanceHdl, tLedType, BOOL);
 
 typedef struct
 {
@@ -53,7 +54,7 @@ extern "C"
 #endif
 
 
-OPLKDLLEXPORT BOOL sim_setTargetFunctions(tTargetFunctions targetFunctions_p);
+OPLKDLLEXPORT BOOL sim_setTargetFunctions(tSimulationInstanceHdl simHdl_p, tTargetFunctions targetFunctions_p);
 OPLKDLLEXPORT void sim_unsetTargetFunctions();
 
 void sim_msleep(UINT32 milliSeconds_p);

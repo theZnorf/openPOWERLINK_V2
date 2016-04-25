@@ -48,6 +48,7 @@ Copyright (c) 2016, Franz Profelt (franz.profelt@gmail.com)
 typedef struct
 {
     tTargetFunctions targetFunctions;
+    tSimulationInstanceHdl simHdl;
     BOOL fInitialized;
 } tSimTargetInstance;
 
@@ -55,7 +56,7 @@ typedef struct
 // local vars
 //------------------------------------------------------------------------------
 
-static tSimTargetInstance instance_l = { { NULL }, FALSE };
+static tSimTargetInstance instance_l = {{NULL}, 0, FALSE};
 
 //------------------------------------------------------------------------------
 // local function prototypes
@@ -65,7 +66,8 @@ static tSimTargetInstance instance_l = { { NULL }, FALSE };
 //            P U B L I C   F U N C T I O N S                                 //
 //============================================================================//
 
-OPLKDLLEXPORT BOOL sim_setTargetFunctions(tTargetFunctions targetFunctions_p)
+OPLKDLLEXPORT BOOL sim_setTargetFunctions(tSimulationInstanceHdl simHdl_p,
+                                          tTargetFunctions targetFunctions_p)
 {
     if (instance_l.fInitialized != TRUE)
     {
@@ -79,6 +81,7 @@ OPLKDLLEXPORT BOOL sim_setTargetFunctions(tTargetFunctions targetFunctions_p)
 
         // set functions
         instance_l.targetFunctions = targetFunctions_p;
+        instance_l.simHdl = simHdl_p;
         instance_l.fInitialized = TRUE;
 
         return TRUE;
@@ -98,7 +101,7 @@ void sim_msleep(UINT32 milliSeconds_p)
     if (instance_l.fInitialized == TRUE)
     {
         // call function
-        instance_l.targetFunctions.pfnMsleep(milliSeconds_p);
+        instance_l.targetFunctions.pfnMsleep(instance_l.simHdl, milliSeconds_p);
     }
 }
 
@@ -109,7 +112,9 @@ tOplkError sim_setIpAdrs(char *ifName_p, UINT32 ipAddress_p,
     if (instance_l.fInitialized == TRUE)
     {
         // call function
-        return instance_l.targetFunctions.pfnSetIp(ifName_p, ipAddress_p, subnetMask_p, mtu_p);
+        return instance_l.targetFunctions
+                         .pfnSetIp(instance_l.simHdl, ifName_p, ipAddress_p,
+                                   subnetMask_p, mtu_p);
     }
 
     return kErrorApiNotInitialized;
@@ -121,7 +126,9 @@ tOplkError sim_setDefaultGateway(UINT32 defaultGateway_p)
     if (instance_l.fInitialized == TRUE)
     {
         // call function
-        return instance_l.targetFunctions.pfnSetDefaultGateway(defaultGateway_p);
+        return instance_l.targetFunctions
+                         .pfnSetDefaultGateway(instance_l.simHdl,
+                                               defaultGateway_p);
     }
 
     return kErrorApiNotInitialized;
@@ -133,7 +140,7 @@ UINT32 sim_getTickCount(void)
     if (instance_l.fInitialized == TRUE)
     {
         // call function
-        return instance_l.targetFunctions.pfnGetTick();
+        return instance_l.targetFunctions.pfnGetTick(instance_l.simHdl);
     }
 
     return 0;
@@ -145,7 +152,8 @@ tOplkError sim_setLed(tLedType ledType_p, BOOL fLedOn_p)
     if (instance_l.fInitialized == TRUE)
     {
         // call function
-        return instance_l.targetFunctions.pfnSetLed(ledType_p, fLedOn_p);
+        return instance_l.targetFunctions
+                         .pfnSetLed(instance_l.simHdl, ledType_p, fLedOn_p);
     }
 
     return kErrorApiNotInitialized;

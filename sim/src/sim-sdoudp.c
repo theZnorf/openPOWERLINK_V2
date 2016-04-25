@@ -47,6 +47,7 @@ Copyright (c) 2016, Franz Profelt (franz.profelt@gmail.com)
 typedef struct
 {
     tSdoUdpFunctions sdoUdpFunctions;
+    tSimulationInstanceHdl simHdl;
     BOOL fInitialized;
 } tSimSdoUdpInstance;
 
@@ -54,7 +55,7 @@ typedef struct
 // local vars
 //------------------------------------------------------------------------------
 
-static tSimSdoUdpInstance instance_l = {{NULL}, FALSE};
+static tSimSdoUdpInstance instance_l = {{NULL}, 0, FALSE};
 
 //------------------------------------------------------------------------------
 // local function prototypes
@@ -64,7 +65,8 @@ static tSimSdoUdpInstance instance_l = {{NULL}, FALSE};
 //            P U B L I C   F U N C T I O N S                                 //
 //============================================================================//
 
-BOOL sim_setSdoUdpFunctions(tSdoUdpFunctions sdoUdpFunctions_p)
+BOOL sim_setSdoUdpFunctions(tSimulationInstanceHdl simHdl_p,
+                            tSdoUdpFunctions sdoUdpFunctions_p)
 {
     if (instance_l.fInitialized != TRUE)
     {
@@ -76,6 +78,7 @@ BOOL sim_setSdoUdpFunctions(tSdoUdpFunctions sdoUdpFunctions_p)
             return FALSE;
 
         instance_l.sdoUdpFunctions = sdoUdpFunctions_p;
+        instance_l.simHdl = simHdl_p;
         instance_l.fInitialized = TRUE;
     }
 
@@ -93,7 +96,8 @@ tOplkError sim_createSdoUdpSocket(tSdoUdpCon *pSdoUdpCon_p)
     if (instance_l.fInitialized == TRUE)
     {
         // call function
-        return instance_l.sdoUdpFunctions.pfnCreateSocket(pSdoUdpCon_p);
+        return instance_l.sdoUdpFunctions
+                         .pfnCreateSocket(instance_l.simHdl, pSdoUdpCon_p);
     }
 
     return kErrorApiNotInitialized;
@@ -105,7 +109,7 @@ tOplkError sim_closeSdoUdpSocket(void)
     if (instance_l.fInitialized == TRUE)
     {
         // call function
-        return instance_l.sdoUdpFunctions.pfnCloseSocket();
+        return instance_l.sdoUdpFunctions.pfnCloseSocket(instance_l.simHdl);
     }
 
     return kErrorApiNotInitialized;
@@ -119,7 +123,8 @@ tOplkError sim_sendToSdoUdpSocket(tSdoUdpCon *pSdoUdpCon_p,
     {
         // call function
         return instance_l.sdoUdpFunctions
-                         .pfnSendToSocket(pSdoUdpCon_p, pSrcData_p, dataSize_p);
+                         .pfnSendToSocket(instance_l.simHdl, pSdoUdpCon_p,
+                                          pSrcData_p, dataSize_p);
     }
 
     return kErrorApiNotInitialized;
@@ -131,7 +136,8 @@ void sim_criticalSectionSdoUdp(BOOL fEnable_p)
     if (instance_l.fInitialized == TRUE)
     {
         // call function
-        instance_l.sdoUdpFunctions.pfnCiritcalSection(fEnable_p);
+        instance_l.sdoUdpFunctions
+                  .pfnCiritcalSection(instance_l.simHdl, fEnable_p);
     }
 }
 

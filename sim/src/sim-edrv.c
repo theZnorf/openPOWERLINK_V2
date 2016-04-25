@@ -48,6 +48,7 @@ Copyright (c) 2016, Franz Profelt (franz.profelt@gmail.com)
 typedef struct
 {
     tEdrvFunctions edrvFunctions;
+    tSimulationInstanceHdl simHdl;
     BOOL fInitialized;
 } tSimEdrvInstance;
 
@@ -55,7 +56,7 @@ typedef struct
 // local vars
 //------------------------------------------------------------------------------
 
-static tSimEdrvInstance instance_l = {{NULL}, FALSE};
+static tSimEdrvInstance instance_l = {{NULL}, 0, FALSE};
 
 //------------------------------------------------------------------------------
 // local function prototypes
@@ -65,7 +66,8 @@ static tSimEdrvInstance instance_l = {{NULL}, FALSE};
 //            P U B L I C   F U N C T I O N S                                 //
 //============================================================================//
 
-BOOL sim_setEdrvFunctions(tEdrvFunctions edrvFunctions_p)
+BOOL sim_setEdrvFunctions(tSimulationInstanceHdl simHdl_p,
+                          tEdrvFunctions edrvFunctions_p)
 {
     if (instance_l.fInitialized != TRUE)
     {
@@ -82,6 +84,7 @@ BOOL sim_setEdrvFunctions(tEdrvFunctions edrvFunctions_p)
             return FALSE;
 
         instance_l.edrvFunctions = edrvFunctions_p;
+        instance_l.simHdl = simHdl_p;
         instance_l.fInitialized = TRUE;
     }
 
@@ -98,7 +101,8 @@ tOplkError sim_initEdrv(tEdrvInitParam *pEdrvInitParam_p)
     // check if functions are initialized
     if (instance_l.fInitialized == TRUE)
     {
-        return instance_l.edrvFunctions.pfnInit(pEdrvInitParam_p);
+        return instance_l.edrvFunctions
+                         .pfnInit(instance_l.simHdl, pEdrvInitParam_p);
     }
 
     return kErrorApiNotInitialized;
@@ -109,7 +113,7 @@ tOplkError sim_exitEdrv()
     // check if functions are initialized
     if (instance_l.fInitialized == TRUE)
     {
-        return instance_l.edrvFunctions.pfnExit();
+        return instance_l.edrvFunctions.pfnExit(instance_l.simHdl);
     }
 
     return kErrorApiNotInitialized;
@@ -120,7 +124,7 @@ UINT8 *sim_getMacAddr()
     // check if functions are initialized
     if (instance_l.fInitialized == TRUE)
     {
-        return instance_l.edrvFunctions.pfnGetMacAddr();
+        return instance_l.edrvFunctions.pfnGetMacAddr(instance_l.simHdl);
     }
 
     return NULL;
@@ -131,7 +135,8 @@ tOplkError sim_sendTxBuffer(tEdrvTxBuffer *pBuffer_p)
     // check if functions are initialized
     if (instance_l.fInitialized == TRUE)
     {
-        return instance_l.edrvFunctions.pfnSendTxBuffer(pBuffer_p);
+        return instance_l.edrvFunctions
+                         .pfnSendTxBuffer(instance_l.simHdl, pBuffer_p);
     }
 
     return kErrorApiNotInitialized;
@@ -142,7 +147,8 @@ tOplkError sim_allocTxBuffer(tEdrvTxBuffer *pBuffer_p)
     // check if functions are initialized
     if (instance_l.fInitialized == TRUE)
     {
-        return instance_l.edrvFunctions.pfnAllocTxBuffer(pBuffer_p);
+        return instance_l.edrvFunctions
+                         .pfnAllocTxBuffer(instance_l.simHdl, pBuffer_p);
     }
 
     return kErrorApiNotInitialized;
@@ -153,7 +159,8 @@ tOplkError sim_freeTxBuffer(tEdrvTxBuffer *pBuffer_p)
     // check if functions are initialized
     if (instance_l.fInitialized == TRUE)
     {
-        return instance_l.edrvFunctions.pfnFreeTxBuffer(pBuffer_p);
+        return instance_l.edrvFunctions
+                         .pfnFreeTxBuffer(instance_l.simHdl, pBuffer_p);
     }
 
     return kErrorApiNotInitialized;
@@ -166,7 +173,8 @@ tOplkError sim_changeRxFilter(tEdrvFilter *pFilter_p, UINT count_p,
     if (instance_l.fInitialized == TRUE)
     {
         return instance_l.edrvFunctions
-                         .pfnChangeRxBufferFiler(pFilter_p, count_p,
+                         .pfnChangeRxBufferFiler(instance_l.simHdl, pFilter_p,
+                                                 count_p,
                                                  entryChanged_p, changeFlags_p);
     }
 
@@ -178,7 +186,9 @@ tOplkError sim_clearRxMulticastMacAddr(UINT8 *pMacAddr_p)
     // check if functions are initialized
     if (instance_l.fInitialized == TRUE)
     {
-        return instance_l.edrvFunctions.pfnClearMulticastMacAddr(pMacAddr_p);
+        return instance_l.edrvFunctions
+                         .pfnClearMulticastMacAddr(instance_l.simHdl,
+                                                   pMacAddr_p);
     }
 
     return kErrorApiNotInitialized;
@@ -189,7 +199,8 @@ tOplkError sim_setRxMulticastMacAddr(UINT8 *pMacAddr_p)
     // check if functions are initialized
     if (instance_l.fInitialized == TRUE)
     {
-        return instance_l.edrvFunctions.pfnSetMulticastMacAddr(pMacAddr_p);
+        return instance_l.edrvFunctions
+                         .pfnSetMulticastMacAddr(instance_l.simHdl, pMacAddr_p);
     }
 
     return kErrorApiNotInitialized;

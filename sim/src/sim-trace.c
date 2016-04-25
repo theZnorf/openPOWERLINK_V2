@@ -47,6 +47,7 @@ Copyright (c) 2016, Franz Profelt (franz.profelt@gmail.com)
 typedef struct
 {
     tTraceFunctions traceFunctions;
+    tSimulationInstanceHdl simHdl;
     BOOL fInitialized;
 } tSimTraceInstance;
 
@@ -54,7 +55,7 @@ typedef struct
 // local vars
 //------------------------------------------------------------------------------
 
-static tSimTraceInstance instance_l = { { NULL }, FALSE};
+static tSimTraceInstance instance_l = {{NULL}, 0, FALSE};
 
 //------------------------------------------------------------------------------
 // local function prototypes
@@ -64,7 +65,8 @@ static tSimTraceInstance instance_l = { { NULL }, FALSE};
 //            P U B L I C   F U N C T I O N S                                 //
 //============================================================================//
 
-BOOL sim_setTraceFunctions(tTraceFunctions traceFunctions_p)
+BOOL sim_setTraceFunctions(tSimulationInstanceHdl simHdl_p,
+                           tTraceFunctions traceFunctions_p)
 {
     if (instance_l.fInitialized != TRUE)
     {
@@ -73,6 +75,7 @@ BOOL sim_setTraceFunctions(tTraceFunctions traceFunctions_p)
             return FALSE;
 
         instance_l.traceFunctions = traceFunctions_p;
+        instance_l.simHdl = simHdl_p;
         instance_l.fInitialized = TRUE;
     }
 
@@ -90,7 +93,7 @@ void sim_trace(char const *pmsg_p)
     if (instance_l.fInitialized == TRUE)
     {
         // call function
-        instance_l.traceFunctions.pfnTrace(pmsg_p);
+        instance_l.traceFunctions.pfnTrace(instance_l.simHdl, pmsg_p);
     }
 }
 

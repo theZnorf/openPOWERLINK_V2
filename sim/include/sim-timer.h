@@ -20,6 +20,7 @@ Copyright (c) 2016, Franz Profelt (franz.profelt@gmail.com)
 
 #include <common/oplkinc.h>
 #include <user/timeru.h>
+#include <sim.h>
 
 //------------------------------------------------------------------------------
 // const defines
