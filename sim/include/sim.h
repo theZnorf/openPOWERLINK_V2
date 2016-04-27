@@ -17,7 +17,7 @@ Copyright (c) 2016, Franz Profelt (franz.profelt@gmail.com)
 // includes
 //------------------------------------------------------------------------------
 
-#include <common/oplkinc.h>
+#include <kernel/hrestimer.h>
 
 //------------------------------------------------------------------------------
 // const defines
@@ -28,6 +28,22 @@ Copyright (c) 2016, Franz Profelt (franz.profelt@gmail.com)
 //------------------------------------------------------------------------------
 
 typedef UINT32 tSimulationInstanceHdl;
+
+
+typedef tOplkError(*tModifyHresTimerFunction)(tSimulationInstanceHdl,
+                                              tTimerHdl *, ULONGLONG,
+                                              tTimerkCallback, ULONG, BOOL);
+
+typedef tOplkError(*tDeleteHresTimerFunction)(tSimulationInstanceHdl,
+                                              tTimerHdl *);
+
+
+typedef struct
+{
+    tModifyHresTimerFunction pfnModifyHresTimer;
+    tDeleteHresTimerFunction pfnDeleteHresTimer;
+} tHresTimerFunctions;
+
 
 //------------------------------------------------------------------------------
 // function prototypes

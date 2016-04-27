@@ -29,20 +29,6 @@ Copyright (c) 2016, Franz Profelt (franz.profelt@gmail.com)
 // typedef
 //------------------------------------------------------------------------------
 
-typedef tOplkError(*tModifyHresTimerFunction)(tSimulationInstanceHdl,
-                                              tTimerHdl *, ULONGLONG,
-                                              tTimerkCallback, ULONG, BOOL);
-
-typedef tOplkError(*tDeleteHresTimerFunction)(tSimulationInstanceHdl,
-                                              tTimerHdl *);
-
-
-typedef struct
-{
-    tModifyHresTimerFunction pfnModifyHresTimer;
-    tDeleteHresTimerFunction pfnDeleteHresTimer;
-} tHresTimerFunctions;
-
 //------------------------------------------------------------------------------
 // function prototypes
 //------------------------------------------------------------------------------
