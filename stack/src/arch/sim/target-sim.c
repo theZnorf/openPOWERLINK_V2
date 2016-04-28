@@ -112,6 +112,12 @@ tOplkError target_setDefaultGateway(UINT32 defaultGateway_p)
     return sim_setDefaultGateway(defaultGateway_p);;
 }
 
+
+void target_enableGlobalInterrupt(BYTE fEnable_p)
+{
+    UNUSED_PARAMETER(fEnable_p);
+}
+
 //------------------------------------------------------------------------------
 /**
 \brief    Get current system tick
