@@ -19,6 +19,7 @@ Copyright (c) 2016, Franz Profelt (franz.profelt@gmail.com)
 
 #include <kernel/hrestimer.h>
 #include <common/led.h>
+#include <kernel/edrv.h>
 
 //------------------------------------------------------------------------------
 // const defines
@@ -71,6 +72,32 @@ typedef struct
     tTraceFunction pfnTrace;
 } tTraceFunctions;
 
+typedef tOplkError(*tInitEdrvFunction)(tSimulationInstanceHdl,
+                                       tEdrvInitParam *);
+
+typedef tOplkError(*tExitEdrvFunction)(tSimulationInstanceHdl);
+
+typedef UINT8 *(*tgetMacAddrFunction)(tSimulationInstanceHdl);
+
+typedef tOplkError(*tTxBufferFunction)(tSimulationInstanceHdl, tEdrvTxBuffer *);
+
+typedef tOplkError(*tChangeRxBufferFunction)(tSimulationInstanceHdl,
+                                             tEdrvFilter *, UINT, UINT, UINT);
+
+typedef tOplkError(*tMulticastFunction)(tSimulationInstanceHdl, UINT8 *);
+
+typedef struct
+{
+    tInitEdrvFunction pfnInit;
+    tExitEdrvFunction pfnExit;
+    tgetMacAddrFunction pfnGetMacAddr;
+    tTxBufferFunction pfnSendTxBuffer;
+    tTxBufferFunction pfnAllocTxBuffer;
+    tTxBufferFunction pfnFreeTxBuffer;
+    tChangeRxBufferFunction pfnChangeRxBufferFiler;
+    tMulticastFunction pfnSetMulticastMacAddr;
+    tMulticastFunction pfnClearMulticastMacAddr;
+} tEdrvFunctions;
 
 //------------------------------------------------------------------------------
 // function prototypes
