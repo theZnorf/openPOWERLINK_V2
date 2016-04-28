@@ -16,7 +16,6 @@ Copyright (c) 2016, Franz Profelt (franz.profelt@gmail.com)
 //------------------------------------------------------------------------------
 // includes
 //------------------------------------------------------------------------------
-#include <common/oplkinc.h>
 #include <sim.h>
 
 //------------------------------------------------------------------------------
@@ -26,13 +25,6 @@ Copyright (c) 2016, Franz Profelt (franz.profelt@gmail.com)
 //------------------------------------------------------------------------------
 // typedef
 //------------------------------------------------------------------------------
-
-typedef void(*tTraceFunction)(tSimulationInstanceHdl, char const *);
-
-typedef struct
-{
-    tTraceFunction pfnTrace;
-} tTraceFunctions;
 
 //------------------------------------------------------------------------------
 // function prototypes

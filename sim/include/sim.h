@@ -64,6 +64,13 @@ typedef struct
     tSetLedFunction pfnSetLed;
 } tTargetFunctions;
 
+typedef void(*tTraceFunction)(tSimulationInstanceHdl, char const *);
+
+typedef struct
+{
+    tTraceFunction pfnTrace;
+} tTraceFunctions;
+
 
 //------------------------------------------------------------------------------
 // function prototypes
