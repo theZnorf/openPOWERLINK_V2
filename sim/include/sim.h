@@ -18,6 +18,7 @@ Copyright (c) 2016, Franz Profelt (franz.profelt@gmail.com)
 //------------------------------------------------------------------------------
 
 #include <kernel/hrestimer.h>
+#include <common/led.h>
 
 //------------------------------------------------------------------------------
 // const defines
@@ -26,6 +27,7 @@ Copyright (c) 2016, Franz Profelt (franz.profelt@gmail.com)
 //------------------------------------------------------------------------------
 // typedef
 //------------------------------------------------------------------------------
+
 
 typedef UINT32 tSimulationInstanceHdl;
 
@@ -43,6 +45,24 @@ typedef struct
     tModifyHresTimerFunction pfnModifyHresTimer;
     tDeleteHresTimerFunction pfnDeleteHresTimer;
 } tHresTimerFunctions;
+
+
+
+
+typedef void(*tMsleepFunction)(tSimulationInstanceHdl, UINT32);
+typedef tOplkError(*tSetIpFunction)(tSimulationInstanceHdl, char*, UINT32, UINT32, UINT16);
+typedef tOplkError(*tSetDefaultGateWayFunction)(tSimulationInstanceHdl, UINT32);
+typedef UINT32(*tGetTickFunction)(tSimulationInstanceHdl);
+typedef tOplkError(*tSetLedFunction)(tSimulationInstanceHdl, tLedType, BOOL);
+
+typedef struct
+{
+    tMsleepFunction pfnMsleep;
+    tSetIpFunction pfnSetIp;
+    tSetDefaultGateWayFunction pfnSetDefaultGateway;
+    tGetTickFunction pfnGetTick;
+    tSetLedFunction pfnSetLed;
+} tTargetFunctions;
 
 
 //------------------------------------------------------------------------------
