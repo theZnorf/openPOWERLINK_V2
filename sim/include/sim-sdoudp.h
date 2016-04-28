@@ -17,8 +17,6 @@ Copyright (c) 2016, Franz Profelt (franz.profelt@gmail.com)
 // includes
 //------------------------------------------------------------------------------
 
-#include <common/oplkinc.h>
-#include <user/sdoudp.h>
 #include <sim.h>
 
 //------------------------------------------------------------------------------
@@ -28,26 +26,6 @@ Copyright (c) 2016, Franz Profelt (franz.profelt@gmail.com)
 //------------------------------------------------------------------------------
 // typedef
 //------------------------------------------------------------------------------
-
-typedef tOplkError(*tCreateSdoUdpSocketFunction)(tSimulationInstanceHdl,
-                                                 tSdoUdpCon *);
-
-typedef tOplkError(*tCloseSdoUdpSocketFunction)(tSimulationInstanceHdl);
-
-typedef tOplkError(*tSendToSdoUdpSocketFunction)(tSimulationInstanceHdl,
-                                                 tSdoUdpCon *, tPlkFrame *,
-                                                 UINT32);
-
-typedef void(*tCriticalSectionSdoUdpFunction)(tSimulationInstanceHdl, BOOL);
-
-
-typedef struct
-{
-    tCreateSdoUdpSocketFunction pfnCreateSocket;
-    tCloseSdoUdpSocketFunction pfnCloseSocket;
-    tSendToSdoUdpSocketFunction pfnSendToSocket;
-    tCriticalSectionSdoUdpFunction pfnCiritcalSection;
-} tSdoUdpFunctions;
 
 //------------------------------------------------------------------------------
 // function prototypes

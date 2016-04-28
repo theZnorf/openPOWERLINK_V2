@@ -20,6 +20,8 @@ Copyright (c) 2016, Franz Profelt (franz.profelt@gmail.com)
 #include <kernel/hrestimer.h>
 #include <common/led.h>
 #include <kernel/edrv.h>
+#include <user/sdoudp.h>
+
 
 //------------------------------------------------------------------------------
 // const defines
@@ -98,6 +100,26 @@ typedef struct
     tMulticastFunction pfnSetMulticastMacAddr;
     tMulticastFunction pfnClearMulticastMacAddr;
 } tEdrvFunctions;
+
+typedef tOplkError(*tCreateSdoUdpSocketFunction)(tSimulationInstanceHdl,
+                                                 tSdoUdpCon *);
+
+typedef tOplkError(*tCloseSdoUdpSocketFunction)(tSimulationInstanceHdl);
+
+typedef tOplkError(*tSendToSdoUdpSocketFunction)(tSimulationInstanceHdl,
+                                                 tSdoUdpCon *, tPlkFrame *,
+                                                 UINT32);
+
+typedef void(*tCriticalSectionSdoUdpFunction)(tSimulationInstanceHdl, BOOL);
+
+
+typedef struct
+{
+    tCreateSdoUdpSocketFunction pfnCreateSocket;
+    tCloseSdoUdpSocketFunction pfnCloseSocket;
+    tSendToSdoUdpSocketFunction pfnSendToSocket;
+    tCriticalSectionSdoUdpFunction pfnCiritcalSection;
+} tSdoUdpFunctions;
 
 //------------------------------------------------------------------------------
 // function prototypes
