@@ -78,6 +78,8 @@ BOOL sim_setHresTimerFunctions(tSimulationInstanceHdl simHdl_p,
         instance_l.hresTimerFunctions = hresTimerFunctions_p;
         instance_l.simHdl = simHdl_p;
         instance_l.fInitialized = TRUE;
+
+        return TRUE;
     }
 
     return FALSE;

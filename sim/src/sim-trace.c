@@ -77,6 +77,8 @@ BOOL sim_setTraceFunctions(tSimulationInstanceHdl simHdl_p,
         instance_l.traceFunctions = traceFunctions_p;
         instance_l.simHdl = simHdl_p;
         instance_l.fInitialized = TRUE;
+
+        return TRUE;
     }
 
     return FALSE;

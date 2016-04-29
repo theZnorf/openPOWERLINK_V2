@@ -72,20 +72,22 @@ BOOL sim_setEdrvFunctions(tSimulationInstanceHdl simHdl_p,
     if (instance_l.fInitialized != TRUE)
     {
         // check function pointer
-        if ((instance_l.edrvFunctions.pfnInit == NULL) ||
-            (instance_l.edrvFunctions.pfnExit == NULL) ||
-            (instance_l.edrvFunctions.pfnGetMacAddr == NULL) ||
-            (instance_l.edrvFunctions.pfnSendTxBuffer == NULL) ||
-            (instance_l.edrvFunctions.pfnAllocTxBuffer == NULL) ||
-            (instance_l.edrvFunctions.pfnFreeTxBuffer == NULL) ||
-            (instance_l.edrvFunctions.pfnChangeRxBufferFiler == NULL) ||
-            (instance_l.edrvFunctions.pfnSetMulticastMacAddr == NULL) ||
-            (instance_l.edrvFunctions.pfnClearMulticastMacAddr == NULL))
+        if ((edrvFunctions_p.pfnInit == NULL) ||
+            (edrvFunctions_p.pfnExit == NULL) ||
+            (edrvFunctions_p.pfnGetMacAddr == NULL) ||
+            (edrvFunctions_p.pfnSendTxBuffer == NULL) ||
+            (edrvFunctions_p.pfnAllocTxBuffer == NULL) ||
+            (edrvFunctions_p.pfnFreeTxBuffer == NULL) ||
+            (edrvFunctions_p.pfnChangeRxBufferFiler == NULL) ||
+            (edrvFunctions_p.pfnSetMulticastMacAddr == NULL) ||
+            (edrvFunctions_p.pfnClearMulticastMacAddr == NULL))
             return FALSE;
 
         instance_l.edrvFunctions = edrvFunctions_p;
         instance_l.simHdl = simHdl_p;
         instance_l.fInitialized = TRUE;
+
+        return TRUE;
     }
 
     return FALSE;

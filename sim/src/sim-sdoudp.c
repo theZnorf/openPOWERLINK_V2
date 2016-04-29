@@ -80,6 +80,8 @@ BOOL sim_setSdoUdpFunctions(tSimulationInstanceHdl simHdl_p,
         instance_l.sdoUdpFunctions = sdoUdpFunctions_p;
         instance_l.simHdl = simHdl_p;
         instance_l.fInitialized = TRUE;
+
+        return TRUE;
     }
 
     return FALSE;
