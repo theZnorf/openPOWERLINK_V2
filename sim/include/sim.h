@@ -34,6 +34,7 @@ Copyright (c) 2016, Franz Profelt (franz.profelt@gmail.com)
 
 typedef UINT32 tSimulationInstanceHdl;
 
+typedef tOplkError (*tInitExitHresTimerFunction)(tSimulationInstanceHdl);
 
 typedef tOplkError(*tModifyHresTimerFunction)(tSimulationInstanceHdl,
                                               tTimerHdl *, ULONGLONG,
@@ -45,17 +46,22 @@ typedef tOplkError(*tDeleteHresTimerFunction)(tSimulationInstanceHdl,
 
 typedef struct
 {
+    tInitExitHresTimerFunction pfnInitHresTimer;
+    tInitExitHresTimerFunction pfnExitHresTimer;
     tModifyHresTimerFunction pfnModifyHresTimer;
     tDeleteHresTimerFunction pfnDeleteHresTimer;
 } tHresTimerFunctions;
 
 
-
-
 typedef void(*tMsleepFunction)(tSimulationInstanceHdl, UINT32);
-typedef tOplkError(*tSetIpFunction)(tSimulationInstanceHdl, char*, UINT32, UINT32, UINT16);
+
+typedef tOplkError(*tSetIpFunction)(tSimulationInstanceHdl, char *, UINT32,
+                                    UINT32, UINT16);
+
 typedef tOplkError(*tSetDefaultGateWayFunction)(tSimulationInstanceHdl, UINT32);
+
 typedef UINT32(*tGetTickFunction)(tSimulationInstanceHdl);
+
 typedef tOplkError(*tSetLedFunction)(tSimulationInstanceHdl, tLedType, BOOL);
 
 typedef struct

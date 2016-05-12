@@ -27,7 +27,7 @@ Copyright (c) 2016, Franz Profelt (franz.profelt@gmail.com)
 // Default debug level:
 // Only debug traces of these modules will be compiled which flags are set in define DEF_DEBUG_LVL.
 #ifndef DEF_DEBUG_LVL
-#define DEF_DEBUG_LVL                               (0xC00000000L)
+#define DEF_DEBUG_LVL                               (0xFFFFFFFFFL)
 #endif
 
 #undef FTRACE_DEBUG

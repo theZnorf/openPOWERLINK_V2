@@ -15,6 +15,7 @@ Copyright (c) 2016, Franz Profelt (franz.profelt@gmail.com)
 // includes
 //------------------------------------------------------------------------------
 #include <sim-hrestimer.h>
+#include <sim.h>
 
 //============================================================================//
 //            G L O B A L   D E F I N I T I O N S                             //
@@ -71,7 +72,9 @@ BOOL sim_setHresTimerFunctions(tSimulationInstanceHdl simHdl_p,
     if (instance_l.fInitialized != TRUE)
     {
         // check function pointer
-        if ((hresTimerFunctions_p.pfnModifyHresTimer == NULL) ||
+        if ((hresTimerFunctions_p.pfnInitHresTimer == NULL) ||
+            (hresTimerFunctions_p.pfnExitHresTimer == NULL) ||
+            (hresTimerFunctions_p.pfnModifyHresTimer == NULL) ||
             (hresTimerFunctions_p.pfnDeleteHresTimer == NULL))
             return FALSE;
 
@@ -88,6 +91,27 @@ BOOL sim_setHresTimerFunctions(tSimulationInstanceHdl simHdl_p,
 void sim_unsetHresTimerFunctions()
 {
     instance_l.fInitialized = FALSE;
+}
+
+
+tOplkError sim_initHresTimer()
+{
+    // check if module was initialized
+    if (instance_l.fInitialized == TRUE)
+    {
+        // call function
+        return instance_l.hresTimerFunctions.pfnInitHresTimer(instance_l.simHdl);
+    }
+}
+
+tOplkError sim_exitHresTimer()
+{
+    // check if module was initialized
+    if (instance_l.fInitialized == TRUE)
+    {
+        // call function
+        return instance_l.hresTimerFunctions.pfnExitHresTimer(instance_l.simHdl);
+    }
 }
 
 tOplkError sim_modifyHresTimer(tTimerHdl *pTimerHdl_p, ULONGLONG time_p,

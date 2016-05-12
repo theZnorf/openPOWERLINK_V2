@@ -72,7 +72,7 @@ The function initializes the high-resolution timer module
 //------------------------------------------------------------------------------
 tOplkError hrestimer_init(void)
 {
-    return kErrorOk;
+    return sim_initHresTimer();
 }
 
 //------------------------------------------------------------------------------
@@ -88,7 +88,7 @@ The function shuts down the high-resolution timer module.
 //------------------------------------------------------------------------------
 tOplkError hrestimer_exit(void)
 {
-    return kErrorOk;
+    return sim_exitHresTimer();
 }
 
 //------------------------------------------------------------------------------

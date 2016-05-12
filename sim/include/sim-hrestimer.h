@@ -43,6 +43,10 @@ OPLKDLLEXPORT BOOL sim_setHresTimerFunctions(tSimulationInstanceHdl simHdl,
 
 OPLKDLLEXPORT void sim_unsetHresTimerFunctions();
 
+tOplkError sim_initHresTimer();
+
+tOplkError sim_exitHresTimer();
+
 tOplkError sim_modifyHresTimer(tTimerHdl *pTimerHdl_p, ULONGLONG time_p,
                                tTimerkCallback pfnCallback_p, ULONG argument_p,
                                BOOL fContinue_p);
