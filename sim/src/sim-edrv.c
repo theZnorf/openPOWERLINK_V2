@@ -45,11 +45,16 @@ Copyright (c) 2016, Franz Profelt (franz.profelt@gmail.com)
 // local types
 //------------------------------------------------------------------------------
 
+/**
+\brief  Instance struct for sim-edrv module
+
+This struct contains informations about the current instance.
+*/
 typedef struct
 {
-    tEdrvFunctions edrvFunctions;
-    tSimulationInstanceHdl simHdl;
-    BOOL fInitialized;
+    tEdrvFunctions edrvFunctions;   ///< Struct with all simulation interface functions
+    tSimulationInstanceHdl simHdl;  ///< Handle to running simulation for multiple simulated instances
+    BOOL fInitialized;              ///< Initialization flag signalling if the stores functions are valid
 } tSimEdrvInstance;
 
 //------------------------------------------------------------------------------
@@ -66,6 +71,17 @@ static tSimEdrvInstance instance_l = {{NULL}, 0, FALSE};
 //            P U B L I C   F U N C T I O N S                                 //
 //============================================================================//
 
+/**
+\brief  Setter for simulation interface functions for edrv
+
+This function sets the simulation interface functions for edrv
+
+\param simInstanceHdl_p     The handle of the current simulated stack instance
+\param edrvFunctions_p      Structure with all simulation interface functions
+
+\return The function returns TRUE when the all given functions are valid
+    and the structure was set internally, otherwise the function returns FALSE
+*/
 BOOL sim_setEdrvFunctions(tSimulationInstanceHdl simHdl_p,
                           tEdrvFunctions edrvFunctions_p)
 {
@@ -132,6 +148,15 @@ UINT8 *sim_getMacAddr()
     return NULL;
 }
 
+/**
+\brief  Send Tx buffer
+
+This function forwards the sending call to the configured simulation interface.
+
+\param  pBuffer_p           Tx buffer descriptor
+
+\return The function returns a tOplkError error code.
+*/
 tOplkError sim_sendTxBuffer(tEdrvTxBuffer *pBuffer_p)
 {
     // check if functions are initialized

@@ -80,32 +80,114 @@ typedef struct
     tTraceFunction pfnTrace;
 } tTraceFunctions;
 
-typedef tOplkError(*tInitEdrvFunction)(tSimulationInstanceHdl,
-                                       tEdrvInitParam *);
 
-typedef tOplkError(*tExitEdrvFunction)(tSimulationInstanceHdl);
+//------------------------------------------------------------------------------
+// edrv types
+//------------------------------------------------------------------------------
 
-typedef UINT8 *(*tgetMacAddrFunction)(tSimulationInstanceHdl);
+/**
+\brief Type for initEdrv function pointer
 
-typedef tOplkError(*tTxBufferFunction)(tSimulationInstanceHdl, tEdrvTxBuffer *);
+This type defines a function pointer for the simulation interface function
+ for initEdrv.
 
-typedef tOplkError(*tChangeRxBufferFunction)(tSimulationInstanceHdl,
-                                             tEdrvFilter *, UINT, UINT, UINT);
+\param simInstanceHdl_p     The handle of the current simulated stack instance
+\param pEdrvInitParam_p     Pointer to the edrv init parameter
 
-typedef tOplkError(*tMulticastFunction)(tSimulationInstanceHdl, UINT8 *);
+\return The function returns a tOplkError error code
+*/
+typedef tOplkError(*tInitEdrvFunction)(tSimulationInstanceHdl simInstanceHdl_p,
+                                       tEdrvInitParam *pEdrvInitParam_p);
 
+/**
+\brief Type for exitEdrv function pointer
+
+This type defines a function pointer for the simulation interface function
+ for exitEdrv.
+
+\param simInstanceHdl_p     The handle of the current simulated stack instance
+
+\return The function returns a tOplkError error code
+*/
+typedef tOplkError(*tExitEdrvFunction)(tSimulationInstanceHdl simInstanceHdl_p);
+
+/**
+\brief  Type for getMacAddr function pointer
+
+This type defines a function pointer for the simulation interface function
+ for getMacAddr.
+
+\param simInstanceHdl_p     The handle of the current simulated stack instance
+
+\return The function returns a pointer to the MAC address.
+*/
+typedef UINT8 *(*tgetMacAddrFunction)(tSimulationInstanceHdl simInstanceHdl_p);
+
+/**
+\brief   Type for Ethernet txBuffer function pointer
+
+This type defines a function pointer for the simulation interface function
+ for allocTxBuffer and freeTxBuffer.
+
+\param simInstanceHdl_p     The handle of the current simulated stack instance
+\param  pBuffer_p           Tx buffer descriptor
+
+\return The function returns a tOplkError error code.
+*/
+typedef tOplkError(*tTxBufferFunction)(tSimulationInstanceHdl simInstanceHdl_p,
+                                       tEdrvTxBuffer * pBuffer_p);
+
+/**
+\brief  Type for changeRxBuffer function pointer
+
+This type defines a function pointer for the simulation interface function
+ for changeRxBuffer.
+
+\param simInstanceHdl_p     The handle of the current simulated stack instance
+\param  pFilter_p           Base pointer of Rx filter array
+\param  count_p             Number of Rx filter array entries
+\param  entryChanged_p      Index of Rx filter entry that shall be changed
+\param  changeFlags_p       Bit mask that selects the changing Rx filter property
+
+\return The function returns a tOplkError error code.
+*/
+typedef tOplkError(*tChangeRxBufferFunction)(tSimulationInstanceHdl simInstanceHdl_p,
+                                             tEdrvFilter *pFilter_p, UINT count_p,
+                                             UINT entryChanged_p, UINT changeFlags_p);
+
+/**
+\brief  Type for Ethernet multicast function pointer
+
+This type defines a function pointer for the simulation interface function
+ for setRxMulticastMacAddr and clearRxMulticastMacAddr.
+
+\param simInstanceHdl_p     The handle of the current simulated stack instance
+\param  pMacAddr_p           Base pointer of Rx filter array
+
+\return The function returns a tOplkError error code.
+*/
+typedef tOplkError(*tMulticastFunction)(tSimulationInstanceHdl simInstanceHdl_p,
+                                        UINT8 * pMacAddr_p);
+
+/**
+\brief Edrv function pointer
+
+This struct holds all funtion pointer to the edrv functions used in the
+ simulation interface (\ref sim-edrv.g).
+*/
 typedef struct
 {
-    tInitEdrvFunction pfnInit;
-    tExitEdrvFunction pfnExit;
-    tgetMacAddrFunction pfnGetMacAddr;
-    tTxBufferFunction pfnSendTxBuffer;
-    tTxBufferFunction pfnAllocTxBuffer;
-    tTxBufferFunction pfnFreeTxBuffer;
-    tChangeRxBufferFunction pfnChangeRxBufferFiler;
-    tMulticastFunction pfnSetMulticastMacAddr;
-    tMulticastFunction pfnClearMulticastMacAddr;
+    tInitEdrvFunction pfnInit;                          ///< Pointer to the initEdrv function
+    tExitEdrvFunction pfnExit;                          ///< Pointer to the exitEdrv function
+    tgetMacAddrFunction pfnGetMacAddr;                  ///< Pointer to the getMacAddr function
+    tTxBufferFunction pfnSendTxBuffer;                  ///< Pointer to the sendTxBuffer function
+    tTxBufferFunction pfnAllocTxBuffer;                 ///< Pointer to the allocTxBuffer function
+    tTxBufferFunction pfnFreeTxBuffer;                  ///< Pointer to the freeTxBuffer function
+    tChangeRxBufferFunction pfnChangeRxBufferFiler;     ///< Pointer to the changeRcBufferFilter function
+    tMulticastFunction pfnSetMulticastMacAddr;          ///< Pointer to the setMulticastMacAddr function
+    tMulticastFunction pfnClearMulticastMacAddr;        ///< Pointer to the clearMulticastMacAddr function
 } tEdrvFunctions;
+
 
 typedef tOplkError(*tCreateSdoUdpSocketFunction)(tSimulationInstanceHdl,
                                                  tSdoUdpCon *);

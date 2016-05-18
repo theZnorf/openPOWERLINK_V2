@@ -38,28 +38,18 @@ extern "C"
 
 OPLKDLLEXPORT BOOL sim_setEdrvFunctions(tSimulationInstanceHdl simHdl,
                                         tEdrvFunctions edrvFunctions_p);
-
 OPLKDLLEXPORT void sim_unsetEdrvFunctions();
 
 tOplkError sim_initEdrv(tEdrvInitParam *pEdrvInitParam_p);
-
 tOplkError sim_exitEdrv();
-
 UINT8 *sim_getMacAddr();
-
 tOplkError sim_sendTxBuffer(tEdrvTxBuffer *pBuffer_p);
-
 tOplkError sim_allocTxBuffer(tEdrvTxBuffer *pBuffer_p);
-
 tOplkError sim_freeTxBuffer(tEdrvTxBuffer *pBuffer_p);
-
 tOplkError sim_changeRxFilter(tEdrvFilter *pFilter_p, UINT count_p,
                               UINT entryChanged_p, UINT changeFlags_p);
-
 tOplkError sim_clearRxMulticastMacAddr(UINT8 *pMacAddr_p);
-
 tOplkError sim_setRxMulticastMacAddr(UINT8 *pMacAddr_p);
-
 
 #ifdef __cplusplus
 }
