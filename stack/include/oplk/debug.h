@@ -84,8 +84,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define DEF_DEBUG_LVL                   (DEBUG_LVL_ALWAYS | DEBUG_LVL_ERROR)
 #endif
 
+#undef DEBUG_GLB_LVL
+
 #ifndef DEBUG_GLB_LVL
-#define DEBUG_GLB_LVL                   (DEF_DEBUG_LVL)
+#define DEBUG_GLB_LVL                   (0xFFFFFFFF)
 #endif
 
 //---------------------------------------------------------------------------
