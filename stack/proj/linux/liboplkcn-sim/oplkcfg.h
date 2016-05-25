@@ -121,4 +121,12 @@ Copyright (c) 2016, Franz Profelt (franz.profelt@gmail.com)
 // SDO module specific defines
 //==============================================================================
 
+
+//==============================================================================
+// Trace defines
+//==============================================================================
+
+// size of character buffer holding trace messages
+#define TRACE_SIM_BUFFER_SIZE                       256
+
 #endif // _INC_oplkcfg_H_
