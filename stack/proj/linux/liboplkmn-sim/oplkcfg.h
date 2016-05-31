@@ -48,6 +48,7 @@ Copyright (c) 2016, Franz Profelt (franz.profelt@gmail.com)
 #define CONFIG_INCLUDE_IP
 #define CONFIG_INCLUDE_CFM
 #define CONFIG_INCLUDE_PRES_FORWARD
+#define CONFIG_INCLUDE_LEDK
 
 #define CONFIG_DLLCAL_QUEUE                         CIRCBUF_QUEUE
 

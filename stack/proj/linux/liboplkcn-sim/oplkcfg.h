@@ -43,6 +43,7 @@ Copyright (c) 2016, Franz Profelt (franz.profelt@gmail.com)
 #define CONFIG_INCLUDE_SDOC
 #define CONFIG_INCLUDE_SDO_ASND
 #define CONFIG_INCLUDE_MASND
+#define CONFIG_INCLUDE_LEDK
 
 #define CONFIG_DLLCAL_QUEUE                         CIRCBUF_QUEUE
 
