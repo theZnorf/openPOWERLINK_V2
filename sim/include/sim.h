@@ -209,6 +209,20 @@ typedef struct
     tCriticalSectionSdoUdpFunction pfnCiritcalSection;
 } tSdoUdpFunctions;
 
+
+
+// Api functions
+typedef tOplkError(*tSimProcessSyncCb)(tSimulationInstanceHdl);
+typedef tOplkError(*tSimEventCb)(tSimulationInstanceHdl, tOplkApiEventType,
+                                 tOplkApiEventArg*, void*);
+
+typedef struct
+{
+    tSimProcessSyncCb pfnCbProcessSync;
+    tSimEventCb pfnCbEvent;
+} tApiFunctions;
+
+
 //------------------------------------------------------------------------------
 // function prototypes
 //------------------------------------------------------------------------------
