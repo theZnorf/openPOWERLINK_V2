@@ -211,17 +211,23 @@ typedef struct
 
 
 
-// Api functions
+// Process Sync
 typedef tOplkError(*tSimProcessSyncCb)(tSimulationInstanceHdl);
+
+typedef struct
+{
+    tSimProcessSyncCb pfnCbProcessSync;
+} tProcessSyncFunctions;
+
+
+// Api Event
 typedef tOplkError(*tSimEventCb)(tSimulationInstanceHdl, tOplkApiEventType,
                                  tOplkApiEventArg*, void*);
 
 typedef struct
 {
-    tSimProcessSyncCb pfnCbProcessSync;
     tSimEventCb pfnCbEvent;
-} tApiFunctions;
-
+} tApiEventFunctions;
 
 //------------------------------------------------------------------------------
 // function prototypes

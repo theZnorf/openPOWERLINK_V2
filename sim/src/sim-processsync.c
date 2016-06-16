@@ -1,8 +1,8 @@
 /**
 ********************************************************************************
-\file   sim-api.c
+\file   sim-processsync.c
 
-\brief  Stub implementation of api specific functions for simulation
+\brief  Stub implementation of process sync specific functions for simulation
 
 \ingroup module_sim
 *******************************************************************************/
@@ -16,9 +16,6 @@ Copyright (c) 2016, Franz Profelt (franz.profelt@gmail.com)
 //------------------------------------------------------------------------------
 
 #include <sim-api.h>
-#include <oplk/oplk.h>
-#include <sim-processsync.h>
-#include <sim-apievent.h>
 
 //============================================================================//
 //            G L O B A L   D E F I N I T I O N S                             //
@@ -48,9 +45,23 @@ Copyright (c) 2016, Franz Profelt (franz.profelt@gmail.com)
 // local types
 //------------------------------------------------------------------------------
 
+/**
+\brief  Instance struct for sim-processsync module
+
+This struct contains informations about the current instance.
+*/
+typedef struct
+{
+    tProcessSyncFunctions processSyncFunctions;     ///< Struct with all simulation interface functions
+    tSimulationInstanceHdl simHdl;  ///< Handle to running simulation for multiple simulated instances
+    BOOL fInitialized;              ///< Initialization flag signalling if the stores functions are valid
+} tSimApiInstance;
+
 //------------------------------------------------------------------------------
 // local vars
 //------------------------------------------------------------------------------
+
+static tSimApiInstance instance_l = {{NULL}, 0, FALSE};
 
 //------------------------------------------------------------------------------
 // local function prototypes
@@ -60,20 +71,52 @@ Copyright (c) 2016, Franz Profelt (franz.profelt@gmail.com)
 //            P U B L I C   F U N C T I O N S                                 //
 //============================================================================//
 
-tOplkError sim_oplkCreate(tOplkApiInitParam *pInitParam_p)
+/**
+\brief  Setter for simulation interface functions for edrv
+
+This function sets the simulation interface functions for edrv
+
+\param simInstanceHdl_p     The handle of the current simulated stack instance
+\param edrvFunctions_p      Structure with all simulation interface functions
+
+\return The function returns TRUE when the all given functions are valid
+    and the structure was set internally, otherwise the function returns FALSE
+*/
+BOOL sim_setProcessSyncFunctions(tSimulationInstanceHdl simHdl_p,
+                                 tProcessSyncFunctions processSyncFunctions_p)
 {
-    // check parameter
-    if (pInitParam_p == NULL)
-        return kErrorApiInvalidParam;
+    if (instance_l.fInitialized != TRUE)
+    {
+        // check function pointers
+        if (processSyncFunctions_p.pfnCbProcessSync == NULL)
+            return FALSE;
 
-    // change event callback
-    pInitParam_p->pfnCbEvent = sim_eventCb;
+        instance_l.processSyncFunctions = processSyncFunctions_p;
+        instance_l.simHdl = simHdl_p;
+        instance_l.fInitialized = TRUE;
 
-    // change process sync callback
-    pInitParam_p->pfnCbSync = sim_processSyncCb;
+        return TRUE;
+    }
 
-    // forward api call
-    return oplk_create(pInitParam_p);
+    return FALSE;
+}
+
+void sim_unsetProcessSyncFunctions()
+{
+    instance_l.fInitialized = FALSE;
+}
+
+tOplkError sim_processSyncCb(void)
+{
+    // check module initialization
+    if (instance_l.fInitialized == TRUE)
+    {
+        // call function pointer
+        return instance_l.processSyncFunctions
+                         .pfnCbProcessSync(instance_l.simHdl);
+    }
+
+    return kErrorApiNotInitialized;
 }
 
 //============================================================================//
@@ -81,5 +124,6 @@ tOplkError sim_oplkCreate(tOplkApiInitParam *pInitParam_p)
 //============================================================================//
 /// \name Private Functions
 /// \{
+
 
 /// \} 

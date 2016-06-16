@@ -690,6 +690,8 @@ SET(SIM_STUB_SOURCES
     ${SIM_SOURCE_DIR}/sim-hrestimer.c
     ${SIM_SOURCE_DIR}/sim-sdoudp.c
     ${SIM_SOURCE_DIR}/sim-api.c
+    ${SIM_SOURCE_DIR}/sim-apievent.c
+    ${SIM_SOURCE_DIR}/sim-processsync.c
     )
 
 ################################################################################

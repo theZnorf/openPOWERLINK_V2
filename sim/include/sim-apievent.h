@@ -1,8 +1,8 @@
 /**
 ********************************************************************************
-\file   sim-api.h
+\file   sim-apievent.h
 
-\brief  Include file for simulation interface providing api functions
+\brief  Include file for simulation interface providing api event functions
 
  This include file only provides the functions which require a customized
  behavior. All other api functions can be called directly by the simulation
@@ -14,8 +14,8 @@
 Copyright (c) 2016, Franz Profelt (franz.profelt@gmail.com)
 ------------------------------------------------------------------------------*/
 
-#ifndef _INC_sim_api_H_
-#define _INC_sim_api_H_
+#ifndef _INC_sim_api_event_H_
+#define _INC_sim_api_event_H_
 
 //------------------------------------------------------------------------------
 // includes
@@ -40,10 +40,16 @@ extern "C"
 {
 #endif
 
-OPLKDLLEXPORT tOplkError sim_oplkCreate(tOplkApiInitParam* pInitParam_p);
+OPLKDLLEXPORT BOOL sim_setApiEventFunctions(tSimulationInstanceHdl simHdl,
+                                        tApiEventFunctions eventFunctions_p);
+OPLKDLLEXPORT void sim_unsetApiEventFunctions();
+
+tOplkError sim_eventCb(tOplkApiEventType eventType_p,
+                       tOplkApiEventArg *pEventArg_p,
+                       void *pUserArg_p);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* _INC_sim_api_H_ */
+#endif /* _INC_sim_api_event_H_ */
