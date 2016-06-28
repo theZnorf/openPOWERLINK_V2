@@ -532,10 +532,6 @@ SET(USER_TIMER_GENERIC_SOURCES
     ${USER_SOURCE_DIR}/timer/timer-generic.c
     )
 
-SET(USER_TIMER_SIM_SOURCES
-    ${USER_SOURCE_DIR}/timer/timer-sim.c
-    )
-
 ################################################################################
 # Circular buffer sources
 ################################################################################

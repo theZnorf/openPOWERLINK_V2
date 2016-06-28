@@ -50,6 +50,10 @@ tOplkError sim_sendToSdoUdpSocket(tSdoUdpCon *pSdoUdpCon_p,
 
 void sim_criticalSectionSdoUdp(BOOL fEnable_p);
 
+OPLKDLLEXPORT void sim_sdoudpReceiveData(tSdoUdpCon *pSdoUdpCon_p,
+                                         tAsySdoSeq *pSdoSeqData_p,
+                                         UINT dataSize_p);
+
 #ifdef __cplusplus
 }
 #endif

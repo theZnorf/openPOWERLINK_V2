@@ -102,6 +102,8 @@ tOplkError sim_initHresTimer()
         // call function
         return instance_l.hresTimerFunctions.pfnInitHresTimer(instance_l.simHdl);
     }
+
+    return kErrorApiNotInitialized;
 }
 
 tOplkError sim_exitHresTimer()
@@ -112,6 +114,8 @@ tOplkError sim_exitHresTimer()
         // call function
         return instance_l.hresTimerFunctions.pfnExitHresTimer(instance_l.simHdl);
     }
+
+    return kErrorApiNotInitialized;
 }
 
 tOplkError sim_modifyHresTimer(tTimerHdl *pTimerHdl_p, ULONGLONG time_p,

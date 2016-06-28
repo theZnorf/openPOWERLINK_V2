@@ -132,7 +132,6 @@ Copyright (c) 2016, Franz Profelt (franz.profelt@gmail.com)
 #define CONFIG_SDO_MAX_CONNECTION_COM               100
 #define CONFIG_SDO_MAX_CONNECTION_UDP               50
 
-
 //==============================================================================
 // Trace defines
 //==============================================================================

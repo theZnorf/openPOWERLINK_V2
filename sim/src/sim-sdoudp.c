@@ -15,6 +15,7 @@ Copyright (c) 2016, Franz Profelt (franz.profelt@gmail.com)
 // includes
 //------------------------------------------------------------------------------
 #include <sim-sdoudp.h>
+#include <user/sdoudp.h>
 
 //============================================================================//
 //            G L O B A L   D E F I N I T I O N S                             //
@@ -141,6 +142,20 @@ void sim_criticalSectionSdoUdp(BOOL fEnable_p)
         instance_l.sdoUdpFunctions
                   .pfnCiritcalSection(instance_l.simHdl, fEnable_p);
     }
+}
+
+void sim_sdoudpReceiveData(tSdoUdpCon *pSdoUdpCon_p,
+                           tAsySdoSeq *pSdoSeqData_p,
+                           UINT dataSize_p)
+{
+#if defined(CONFIG_INCLUDE_SDO_UDP)
+    // forward sdo upd call
+    sdoudp_receiveData(pSdoUdpCon_p, pSdoSeqData_p, dataSize_p);
+#else
+    UNUSED_PARAMETER(pSdoUdpCon_p);
+    UNUSED_PARAMETER(pSdoSeqData_p);
+    UNUSED_PARAMETER(dataSize_p);
+#endif
 }
 
 //============================================================================//
